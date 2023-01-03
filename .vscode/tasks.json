@@ -1,0 +1,11 @@
+{
+  "label": "build",
+  "group": "build",
+  "type": "shell",
+  "command": "scons",
+  "args": [
+    // Use this when your default shell is PowerShell.
+    "-j $env:NUMBER_OF_PROCESSORS"
+  ],
+  "problemMatcher": "$msCompile"
+}

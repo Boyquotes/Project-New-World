@@ -1,0 +1,111 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Resource",
+"class": "BaseSkill",
+"language": "GDScript",
+"path": "res://game_script/skills/BaseSkill.gd"
+}, {
+"base": "Node2D",
+"class": "BattleManager",
+"language": "GDScript",
+"path": "res://game_script/battle/BattleManager.gd"
+}, {
+"base": "Control",
+"class": "BattleUI",
+"language": "GDScript",
+"path": "res://game_script/battle/UI/UIBattle.gd"
+}, {
+"base": "Control",
+"class": "ButtonUB",
+"language": "GDScript",
+"path": "res://game_script/battle/UI/UICharacterButton.gd"
+}, {
+"base": "Node",
+"class": "CharacterSkill",
+"language": "GDScript",
+"path": "res://game_script/skills/CharacterSkill.gd"
+}, {
+"base": "Node",
+"class": "CharacterStats",
+"language": "GDScript",
+"path": "res://game_script/character_stats/CharacterStats.gd"
+}, {
+"base": "Position2D",
+"class": "DamageNumber",
+"language": "GDScript",
+"path": "res://game_script/battle/DamageNumber.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Entity",
+"language": "GDScript",
+"path": "res://game_script/entities/entity.gd"
+}, {
+"base": "Node2D",
+"class": "Formation",
+"language": "GDScript",
+"path": "res://game_script/battle/Formation.gd"
+}, {
+"base": "Resource",
+"class": "StartingStats",
+"language": "GDScript",
+"path": "res://game_script/character_stats/StartingStats.gd"
+} ]
+_global_script_class_icons={
+"BaseSkill": "",
+"BattleManager": "",
+"BattleUI": "",
+"ButtonUB": "",
+"CharacterSkill": "",
+"CharacterStats": "",
+"DamageNumber": "",
+"Entity": "",
+"Formation": "",
+"StartingStats": ""
+}
+
+[application]
+
+config/name="Project New World"
+run/main_scene="res://Scene/GameScene.tscn"
+config/icon="res://icon.png"
+
+[debug]
+
+gdscript/warnings/integer_division=false
+
+[display]
+
+window/size/always_on_top=true
+window/stretch/mode="viewport"
+
+[global]
+
+debug=false
+
+[gui]
+
+common/drop_mouse_on_gui_input_disabled=true
+
+[layer_names]
+
+2d_physics/layer_1="allies"
+2d_physics/layer_2="enemies"
+2d_physics/layer_3="skill"
+2d_physics/layer_5="obstances"
+
+[physics]
+
+common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"
