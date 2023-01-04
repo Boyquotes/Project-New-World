@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource( 1 )
-skill_name = "Một ngàn lưỡi kiếm"
-skill_description = "Xoay lưỡi kiếm liên tục"
+skill_name = "Dời non lấp bể"
+skill_description = "Gây sát thương lên phía trước và tăng giáp cho bản thân"
 base_dmg = 30
 type = 0
-side_effect = 0
+side_effect = 1

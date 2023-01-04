@@ -7,6 +7,8 @@
 [node name="BattleManager" type="Node2D"]
 script = ExtResource( 1 )
 
-[node name="PartyFormation" parent="." instance=ExtResource( 2 )]
+[node name="Battle" type="Node2D" parent="."]
+
+[node name="PartyFormation" parent="Battle" instance=ExtResource( 2 )]
 
 [node name="UIBattle" parent="." instance=ExtResource( 3 )]

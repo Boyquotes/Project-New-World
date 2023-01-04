@@ -6,16 +6,16 @@
 script = ExtResource( 1 )
 
 [node name="mem1" type="Position2D" parent="."]
-position = Vector2( 50, 450 )
+position = Vector2( 30, 250 )
 
 [node name="mem2" type="Position2D" parent="."]
-position = Vector2( 120, 450 )
+position = Vector2( 60, 250 )
 
 [node name="mem3" type="Position2D" parent="."]
-position = Vector2( 190, 450 )
+position = Vector2( 90, 250 )
 
 [node name="mem4" type="Position2D" parent="."]
-position = Vector2( 260, 450 )
+position = Vector2( 120, 250 )
 
 [node name="mem5" type="Position2D" parent="."]
-position = Vector2( 330, 450 )
+position = Vector2( 150, 250 )

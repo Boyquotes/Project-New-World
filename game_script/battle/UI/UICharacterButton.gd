@@ -6,7 +6,7 @@ signal active_ub(i)
 
 onready var textureImg : TextureRect = $UImain/Panel/TextureRect as TextureRect
 onready var hpBar : ProgressBar = $HPBar
-onready var ubBar : ProgressBar = $UBBAr
+onready var tpBar : ProgressBar = $TPBAr
 
 var pos : int
 var c_name : String

@@ -10,16 +10,16 @@ script = ExtResource( 1 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="button1" type="Position2D" parent="CanvasLayer"]
-position = Vector2( 70, 450 )
+position = Vector2( 60, 265 )
 
 [node name="button2" type="Position2D" parent="CanvasLayer"]
-position = Vector2( 140, 450 )
+position = Vector2( 120, 265 )
 
 [node name="button3" type="Position2D" parent="CanvasLayer"]
-position = Vector2( 210, 450 )
+position = Vector2( 180, 265 )
 
 [node name="button4" type="Position2D" parent="CanvasLayer"]
-position = Vector2( 280, 450 )
+position = Vector2( 240, 265 )
 
 [node name="button5" type="Position2D" parent="CanvasLayer"]
-position = Vector2( 350, 450 )
+position = Vector2( 300, 265 )

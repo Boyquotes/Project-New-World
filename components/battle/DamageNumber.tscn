@@ -1,12 +1,11 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://assets/fonts/Sleepless.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/fonts/Foxes.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://game_script/battle/DamageNumber.gd" type="Script" id=2]
 
 [sub_resource type="DynamicFont" id=1]
 size = 30
-outline_size = 1
-outline_color = Color( 0, 0, 0, 1 )
+use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 1 )
 
@@ -17,12 +16,14 @@ script = ExtResource( 2 )
 [node name="Label" type="Label" parent="."]
 margin_left = -10.0
 margin_top = -55.0
-margin_right = 70.0
-margin_bottom = -29.0
+margin_right = 97.0
+margin_bottom = -23.0
 custom_colors/font_color = Color( 0.992157, 0.8, 0.027451, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 1 )
+text = "-1234"
 align = 1
+valign = 1
 
 [node name="Tween" type="Tween" parent="."]
 

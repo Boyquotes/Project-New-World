@@ -8,6 +8,8 @@ follow_viewport_enable = true
 [node name="ParallaxLayer" type="ParallaxLayer" parent="."]
 
 [node name="Sprite" type="Sprite" parent="ParallaxLayer"]
-scale = Vector2( 1.27875, 1.79464 )
+show_behind_parent = true
+position = Vector2( 0, -8.47033e-22 )
+scale = Vector2( 0.8, 1.07143 )
 texture = ExtResource( 1 )
 centered = false

@@ -13,7 +13,6 @@ var m_armor : int
 var crit_c : int
 var crit_dmg: int
 var speed : int
-var current_ub : int = 0
 
 export var level: int = 10
 

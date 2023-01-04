@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/UB.png-a14d289b4b1abf733db8793233cc4602.stex"
+path="res://.import/UB.png-6fa011d0ce81235f6fba720c7f602777.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprite/mezuna_ryuji/UB.png"
-dest_files=[ "res://.import/UB.png-a14d289b4b1abf733db8793233cc4602.stex" ]
+source_file="res://assets/sprite/thanh_dung/UB.png"
+dest_files=[ "res://.import/UB.png-6fa011d0ce81235f6fba720c7f602777.stex" ]
 
 [params]
 
