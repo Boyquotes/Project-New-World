@@ -6,6 +6,7 @@ onready var _collision : CollisionShape2D = $CollisionShape2D
 
 var dmg : int = 0
 var is_crit : bool = false
+var type : int
 
 func init(is_party: bool) -> void:
 	var layer = 2

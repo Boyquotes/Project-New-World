@@ -11,6 +11,9 @@ onready var _hitbox : HitBox = $HitBox as HitBox
 
 var is_party : bool
 var timer = Timer.new()
+var skil_dmg : int
+var s_name : String
+var type : int
 
 func _ready() -> void:
 	pause_mode = Node.PAUSE_MODE_PROCESS
@@ -25,8 +28,9 @@ func _ready() -> void:
 		scale = Vector2(-1, 1)
 		_node.scale = Vector2(-1, 1)
 	if _hitbox != null:
-		_hitbox.dmg = 20
+		_hitbox.dmg = skil_dmg
 		_hitbox.is_crit = false
+		_hitbox.type = type
 		_hitbox.init(is_party)
 		_hitbox.disable_collision()
 	_aniSprite.connect("animation_finished", self, "_on_UB_animation_finished")

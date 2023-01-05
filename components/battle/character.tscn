@@ -117,3 +117,4 @@ script = ExtResource( 4 )
 script = ExtResource( 5 )
 
 [connection signal="hp_changed" from="Stats" to="." method="_on_Stats_hp_changed"]
+[connection signal="add_tp" from="Skill" to="." method="_on_Skill_add_tp"]

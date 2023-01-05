@@ -9,10 +9,19 @@ onready var party_formation : Formation = $Battle/PartyFormation as Formation
 onready var ui : BattleUI = $UIBattle as BattleUI
 
 var enemy_formation : Formation
+var count_allies : int = 0
 
 func _ready():
-	var ally = [{ "name": "mezuna_ryuji" }, { "name": "thanh_dung" }]
-	var enemy = [{ "name": "thanh_dung" }]
+	var ally = [
+		{ 
+			"name": "mezuna_ryuji",
+			"skill_icon": 2
+		},
+		{ 
+			"name": "thanh_dung", 
+			"skill_icon": 1
+		}]
+	var enemy = [{ "name": "thanh_dung", "skill_icon": 1 }]
 	
 	ui.initButton(ally)
 	initEnemiesFormation()
@@ -32,10 +41,12 @@ func field_characters(party_member: Array, enemies: Array) -> void:
 		newEntity.pos = i 
 		newEntity.connect("actived_ub", self, "_on_Actived_UB")
 		newEntity.connect("hp_changed", self, "_on_Char_hp_changed")
+		newEntity.connect("tp_changed", self, "_on_Char_tp_changed")
 		newEntity.connect("set_max_hp", self, "_on_set_MAX_HP")
 		newEntity.set_collision_layer_bit(1, true)
 		newEntity.set_collision_mask_bit(2, true)
 		init_position.replace_by(newEntity)
+		count_allies += 1
 
 	for i in len(enemies):
 		var init_position = enemy_formation.get_child(i)
@@ -51,6 +62,9 @@ func field_characters(party_member: Array, enemies: Array) -> void:
 func _on_Char_hp_changed(_new_hp: int, pos: int) -> void:
 	ui.change_ui_hp(_new_hp, pos)
 
+func _on_Char_tp_changed(_new_hp: int, pos: int) -> void:
+	ui.change_ui_tp(_new_hp, pos)
+
 func _on_set_MAX_HP(_max_hp: int, pos: int) -> void:
 	ui.set_ui_maxHP(_max_hp, pos)
 
@@ -59,3 +73,20 @@ func _active_UB(i: int) -> void:
 
 func _on_Actived_UB(_index, _position, _is_party) -> void:
 	pass
+
+func _input(_event):
+	if Input.is_action_pressed("ub_pos_1"):
+		if count_allies > 0:
+			party_formation.get_child(0).activeUB()
+	if Input.is_action_pressed("ub_pos_2"):
+		if count_allies > 1:
+			party_formation.get_child(1).activeUB()
+	if Input.is_action_pressed("ub_pos_3"):
+		if count_allies > 2:
+			party_formation.get_child(2).activeUB()
+	if Input.is_action_pressed("ub_pos_4"):
+		if count_allies > 3:
+			party_formation.get_child(3).activeUB()
+	if Input.is_action_pressed("ub_pos_5"):
+		if count_allies > 4:
+			party_formation.get_child(4).activeUB()

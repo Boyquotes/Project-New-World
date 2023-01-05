@@ -2,7 +2,7 @@ extends Node
 
 class_name CharacterStats
 
-signal hp_changed(new_hp)
+signal hp_changed(new_hp, amount, is_crit, type)
 signal hp_depleted()
 
 var max_hp : int
@@ -14,9 +14,7 @@ var crit_c : int
 var crit_dmg: int
 var speed : int
 
-export var level: int = 10
-
-func init(stats: StartingStats) -> void:
+func init(stats: StartingStats, lvl: int) -> void:
 	max_hp = stats.max_hp
 	current_hp = stats.max_hp
 	physic = stats.physic
@@ -26,9 +24,9 @@ func init(stats: StartingStats) -> void:
 	crit_dmg = stats.crit_dmg
 	speed = stats.speed
 
-func take_dmg(amount: int, is_crit: bool) -> void:
+func take_dmg(amount: int, is_crit: bool, type: int) -> void:
 	current_hp -= amount
 	current_hp = max(0, current_hp)
-	emit_signal("hp_changed", current_hp, amount, is_crit)
+	emit_signal("hp_changed", current_hp, amount, is_crit, type)
 	if current_hp == 0:
 		emit_signal("hp_depleted")
