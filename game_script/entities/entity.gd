@@ -4,6 +4,7 @@ class_name Entity
 
 enum SideEffect { NONE, BUFF, TRANSFORM }
 enum DamameType { PHYSIC, MAGIC, TRUE, PIERCE }
+enum BaseClass { FIGHTER, DEFENDER, PALADIN, ARCHER, MAGICAN, HEALER }
 
 signal hp_changed(new_hp, pos)
 signal set_max_hp(max_hp, pos)
@@ -11,6 +12,7 @@ signal tp_changed(new_tp, pos)
 signal actived_ub(index, _position, is_party)
 
 var txt_dmg_number = preload("res://components/battle/DamageNumber.tscn")
+var node_aa_range = preload("res://components/battle/AttackRange.tscn")
 
 onready var stats : CharacterStats = $Stats as CharacterStats
 onready var skill : CharacterSkill = $Skill as CharacterSkill
@@ -23,12 +25,16 @@ export var c_name: String
 export var is_party : bool = true
 export var level : int
 
+var attack_range : AttackRange
+
 #?gameplay section
+var wait_time = 80
+var can_move := true
 const max_dur = 10
 
 var pos : int
 var _velocity := Vector2.ZERO
-var dir = -15
+var dir = -1
 var isKnockBack = false
 var knockback_duration = max_dur
 
@@ -38,12 +44,8 @@ var ub : LayerUB
 
 func _ready() -> void:
 	set_resource()
-	battleSprite.set_flip_h(is_party)
 	hurtBox.init(is_party)
-	running()
-
-func running() -> void:
-	animationPlayer.play("running")
+	animationPlayer.play("Idle")
 
 func set_resource() ->  void:
 	if c_name == null : 
@@ -57,20 +59,28 @@ func set_resource() ->  void:
 	dir *= stats.speed
 	emit_signal("set_max_hp", stats.max_hp, pos)
 
+	if stats.is_ranged:
+		attack_range = node_aa_range.instance()
+		attack_range.init(stats.c_range, is_party)
+		# warning-ignore:return_value_discarded
+		attack_range.connect("toggle_movement", self, "_on_Movement_toggle")
+		add_child(attack_range)
+
 	skill.init(baseSkill, level)
 	if skill.effect == SideEffect.TRANSFORM:
 		ts = load("res://components/UB/" + c_name + "/ts.tscn").instance()
+		# warning-ignore:return_value_discarded
 		ts.connect('end_transfrom', self, '_on_end_Transform')
 		add_child(ts)
 		ts.init_transform(is_party, 5, skill.type)
+
 	if is_party:
+		scale = Vector2(-1, 1)
 		dir = -dir
 
 	ub = load("res://components/UB/" + c_name + "/UB.tscn").instance()
-	ub.is_party = is_party
-	ub.skil_dmg = skill.dmg
-	ub.s_name = skill.skill_name
-	ub.type = skill.type
+	ub.init(skill, is_party)
+	# warning-ignore:return_value_discarded
 	ub.connect("finish", self, "_on_UB_animation_finish")
 	add_child(ub)
 
@@ -97,12 +107,15 @@ func _on_UB_animation_finish():
 		battleSprite.visible = true
 
 func normal_hit_enemy(target: Entity) -> void:
-	animationPlayer.play("attack")
+	animationPlayer.play("Attack")
 	var is_crit = isCrit()
 	var dmg = stats.physic
 	if is_crit: 
 		dmg = dmg * stats.crit_dmg / 100
 	target.take_damage(dmg, is_crit, DamameType.PHYSIC)
+
+func fire_projectile() -> void:
+	pass
 	
 func take_damage(amount: int, is_crit: bool, type: int) -> void:
 	if amount == 0: 
@@ -111,19 +124,35 @@ func take_damage(amount: int, is_crit: bool, type: int) -> void:
 	stats.take_dmg(amount, is_crit, type)
 
 #* Process each frame
-func _physics_process(_delta: float) -> void:
-	if isKnockBack:  
-		if is_party : _velocity.x = -500
-		else: _velocity.x = 500
+func running() -> void:
+	animationPlayer.play("Running")
 
-		knockback_duration -= 1
-		if knockback_duration <= 0 : 
-			isKnockBack = false
-			knockback_duration = max_dur
-	else: 
-		_velocity.x = dir
+func _physics_process(_delta: float) -> void:
+	if wait_time > 0:
+		wait_time -= 1
+		if wait_time == 0:
+			idleSprite.visible = false
+			battleSprite.visible = true
+			running()
+		return
+	if !can_move:
+		_velocity = Vector2.ZERO
+	else:
+		if isKnockBack:
+			if is_party: _velocity.x = -400
+			else: _velocity.x = 400
+				
+			knockback_duration -= 1
+			if knockback_duration <= 0 : 
+				isKnockBack = false
+				knockback_duration = max_dur
+		else: 
+			_velocity.x = dir
 
 	_velocity = move_and_slide(_velocity)
+
+func _on_Movement_toggle(move: bool) -> void:
+	can_move = move
 
 #* Signal Management
 func showDamageNumber(amount: int, is_crit: bool, type: int) -> void:

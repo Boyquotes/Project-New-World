@@ -6,7 +6,9 @@ onready var _collision : CollisionShape2D = $CollisionShape2D
 
 var dmg : int = 0
 var is_crit : bool = false
-var type : int
+var type : int = 0
+var is_kb : bool = true
+var kb_dur : int = 10
 
 func init(is_party: bool) -> void:
 	var layer = 2
@@ -15,8 +17,7 @@ func init(is_party: bool) -> void:
 	set_collision_layer_bit(layer, true)
 
 func enable_collision() -> void:
-	_collision.disabled = false
+	_collision.set_deferred("disabled", false)
 
 func disable_collision() -> void:
-	_collision.disabled = true
-
+	_collision.set_deferred("disabled", true)

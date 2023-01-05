@@ -3,7 +3,7 @@
 [ext_resource path="res://assets/shape/Ellipse.png" type="Texture" id=1]
 
 [node name="D_Area" type="Sprite"]
-modulate = Color( 1, 1, 1, 0.72549 )
+modulate = Color( 1, 1, 1, 0.509804 )
 position = Vector2( -68, 24 )
 scale = Vector2( 2.26667, 1 )
 texture = ExtResource( 1 )

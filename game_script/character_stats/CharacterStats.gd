@@ -2,6 +2,8 @@ extends Node
 
 class_name CharacterStats
 
+enum BaseClass { FIGHTER, DEFENDER, PALADIN, ARCHER, MAGE, HEALER }
+
 signal hp_changed(new_hp, amount, is_crit, type)
 signal hp_depleted()
 
@@ -13,6 +15,10 @@ var m_armor : int
 var crit_c : int
 var crit_dmg: int
 var speed : int
+var c_range : int
+var c_class : int
+
+var is_ranged : bool = false
 
 func init(stats: StartingStats, lvl: int) -> void:
 	max_hp = stats.max_hp
@@ -23,6 +29,10 @@ func init(stats: StartingStats, lvl: int) -> void:
 	crit_c = stats.crit_c
 	crit_dmg = stats.crit_dmg
 	speed = stats.speed
+	c_range = stats.attack_range
+	c_class = stats.base_class
+	if c_class == BaseClass.ARCHER || c_class == BaseClass.MAGE || c_class == BaseClass.HEALER:
+		is_ranged = true
 
 func take_dmg(amount: int, is_crit: bool, type: int) -> void:
 	current_hp -= amount

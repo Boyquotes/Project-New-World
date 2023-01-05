@@ -9,23 +9,28 @@ onready var _node : Node2D = $CanvasLayer/Node2D as Node2D
 onready var _aniSprite : AnimatedSprite = $CanvasLayer/Node2D/AnimatedSprite as AnimatedSprite
 onready var _hitbox : HitBox = $HitBox as HitBox
 
-var is_party : bool
 var timer = Timer.new()
+var is_party : bool
 var skil_dmg : int
 var s_name : String
 var type : int
+
+func init(skill: CharacterSkill, is_p: bool) -> void:
+	is_party = is_p
+	skil_dmg = skill.dmg
+	s_name = skill.skill_name
+	type = skill.type
 
 func _ready() -> void:
 	pause_mode = Node.PAUSE_MODE_PROCESS
 	visible = false
 	_canvas.visible = false
-	timer.connect("timeout",self,"do_this")
+	timer.connect("timeout", self, "do_this")
 	timer.wait_time = 0.1
 	timer.one_shot = true
 	add_child(timer)
 
 	if is_party:
-		scale = Vector2(-1, 1)
 		_node.scale = Vector2(-1, 1)
 	if _hitbox != null:
 		_hitbox.dmg = skil_dmg

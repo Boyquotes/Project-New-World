@@ -2,10 +2,10 @@ extends Area2D
 
 class_name HurtBox
 
-signal get_hit(amount)
-
 func _ready() -> void:
+	# warning-ignore:return_value_discarded
 	connect("area_entered", self, "_on_Area_enter")
+	# warning-ignore:return_value_discarded
 	connect("body_entered", self, "_on_Body_enter")
 
 func init(is_party: bool) -> void:
@@ -19,11 +19,13 @@ func _on_Area_enter(box: HitBox) -> void:
 		return
 	if owner.get_class() == "Entity":
 		owner.take_damage(box.dmg, box.is_crit, box.type)
+		owner.isKnockBack = box.is_kb
+		owner.knockback_duration = box.kb_dur
 
 func _on_Body_enter(body) -> void:
 	if body.get_class() != "Entity":
 		return
 	if owner.get_class() == "Entity":
 		body.normal_hit_enemy(owner)
-		body.isKnockBack = true
-		body.knockback_duration = body.max_dur
+		owner.isKnockBack = true
+		owner.knockback_duration = owner.max_dur

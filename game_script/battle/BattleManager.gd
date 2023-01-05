@@ -39,9 +39,13 @@ func field_characters(party_member: Array, enemies: Array) -> void:
 		newEntity.is_party = true
 		newEntity.position = init_position.position
 		newEntity.pos = i 
+# warning-ignore:return_value_discarded
 		newEntity.connect("actived_ub", self, "_on_Actived_UB")
+# warning-ignore:return_value_discarded
 		newEntity.connect("hp_changed", self, "_on_Char_hp_changed")
+# warning-ignore:return_value_discarded
 		newEntity.connect("tp_changed", self, "_on_Char_tp_changed")
+# warning-ignore:return_value_discarded
 		newEntity.connect("set_max_hp", self, "_on_set_MAX_HP")
 		newEntity.set_collision_layer_bit(1, true)
 		newEntity.set_collision_mask_bit(2, true)
@@ -74,19 +78,19 @@ func _active_UB(i: int) -> void:
 func _on_Actived_UB(_index, _position, _is_party) -> void:
 	pass
 
-func _input(_event):
-	if Input.is_action_pressed("ub_pos_1"):
+func _input(event: InputEvent):
+	if event.is_action_pressed("ub_pos_1"):
 		if count_allies > 0:
 			party_formation.get_child(0).activeUB()
-	if Input.is_action_pressed("ub_pos_2"):
+	if event.is_action_pressed("ub_pos_2"):
 		if count_allies > 1:
 			party_formation.get_child(1).activeUB()
-	if Input.is_action_pressed("ub_pos_3"):
+	if event.is_action_pressed("ub_pos_3"):
 		if count_allies > 2:
 			party_formation.get_child(2).activeUB()
-	if Input.is_action_pressed("ub_pos_4"):
+	if event.is_action_pressed("ub_pos_4"):
 		if count_allies > 3:
 			party_formation.get_child(3).activeUB()
-	if Input.is_action_pressed("ub_pos_5"):
+	if event.is_action_pressed("ub_pos_5"):
 		if count_allies > 4:
 			party_formation.get_child(4).activeUB()

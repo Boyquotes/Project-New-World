@@ -13,13 +13,11 @@ func _ready():
 	_hitbox.disable_collision()
 
 func init_transform(is_party: bool, dmg: int, type: int) -> void:
-	scale = Vector2(-1, 1)
 	_hitbox.dmg = dmg
 	_hitbox.is_crit = false
 	_hitbox.type = type
 	_hitbox.init(is_party)
 		
-
 func activeTransform() -> void:
 	visible = true
 	_aniPlayer.play("UB")
