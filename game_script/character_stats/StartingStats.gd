@@ -13,7 +13,8 @@ export var p_defense : int = 10
 export var m_armor : int = 10
 export var crit_c : int = 10
 export var crit_dmg: int = 150
-export var speed : int = 140
+export var speed : int = 150
 export var attack_range : int = 0
 
 export (BaseClass) var base_class
+export var projectile_texture : String

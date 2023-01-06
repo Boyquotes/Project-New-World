@@ -79,6 +79,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://game_script/skills/LayerUB.gd"
 }, {
+"base": "Node2D",
+"class": "Projectile",
+"language": "GDScript",
+"path": "res://game_script/battle/Projectile.gd"
+}, {
 "base": "Resource",
 "class": "StartingStats",
 "language": "GDScript",
@@ -99,6 +104,7 @@ _global_script_class_icons={
 "HitBox": "",
 "HurtBox": "",
 "LayerUB": "",
+"Projectile": "",
 "StartingStats": ""
 }
 
@@ -185,6 +191,7 @@ ub_pos_5={
 2d_physics/layer_2="enemies"
 2d_physics/layer_3="skill"
 2d_physics/layer_5="obstances"
+2d_physics/layer_10="temporary"
 
 [physics]
 

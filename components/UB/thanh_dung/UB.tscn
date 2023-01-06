@@ -120,6 +120,7 @@ position = Vector2( -40, -45 )
 frames = SubResource( 22 )
 
 [node name="HitBox" type="Area2D" parent="."]
+scale = Vector2( -1, 1 )
 collision_layer = 0
 collision_mask = 0
 script = ExtResource( 3 )
@@ -127,3 +128,4 @@ script = ExtResource( 3 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 position = Vector2( -81, 0 )
 shape = SubResource( 23 )
+disabled = true

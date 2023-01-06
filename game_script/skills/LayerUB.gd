@@ -14,6 +14,7 @@ var is_party : bool
 var skil_dmg : int
 var s_name : String
 var type : int
+var first_set := false
 
 func init(skill: CharacterSkill, is_p: bool) -> void:
 	is_party = is_p
@@ -32,15 +33,17 @@ func _ready() -> void:
 
 	if is_party:
 		_node.scale = Vector2(-1, 1)
-	if _hitbox != null:
-		_hitbox.dmg = skil_dmg
-		_hitbox.is_crit = false
-		_hitbox.type = type
-		_hitbox.init(is_party)
-		_hitbox.disable_collision()
+	_hitbox.dmg = skil_dmg
+	_hitbox.is_crit = false
+	_hitbox.type = type
+	_hitbox.init(is_party)
+	_hitbox.disable_collision()
 	_aniSprite.connect("animation_finished", self, "_on_UB_animation_finished")
 
 func runAnimation(pos: Vector2) -> void:
+	if !first_set:
+		first_set = true
+		_hitbox.scale = Vector2(1, 1)
 	visible = true
 	_node.position = pos
 	_canvas.visible = true

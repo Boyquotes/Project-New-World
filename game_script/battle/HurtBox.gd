@@ -9,6 +9,8 @@ func _ready() -> void:
 	connect("body_entered", self, "_on_Body_enter")
 
 func init(is_party: bool) -> void:
+	set_collision_layer_bit(1, false)
+	set_collision_mask_bit(1, false)
 	var mask  = 1
 	if is_party:
 		mask = 2
@@ -27,5 +29,6 @@ func _on_Body_enter(body) -> void:
 		return
 	if owner.get_class() == "Entity":
 		body.normal_hit_enemy(owner)
-		owner.isKnockBack = true
+		owner.is_loaded = false
+		owner.state = 1
 		owner.knockback_duration = owner.max_dur

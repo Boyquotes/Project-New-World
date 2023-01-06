@@ -12,6 +12,6 @@ p_defense = 10
 m_armor = 10
 crit_c = 10
 crit_dmg = 150
-speed = 100
+speed = 150
 attack_range = 0
 base_class = 0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://game_script/battle/HurtBox.gd" type="Script" id=2]
 [ext_resource path="res://game_script/entities/entity.gd" type="Script" id=3]
@@ -6,14 +6,14 @@
 [ext_resource path="res://game_script/skills/CharacterSkill.gd" type="Script" id=5]
 
 [sub_resource type="RectangleShape2D" id=20]
-extents = Vector2( 17.6471, 26.4706 )
+extents = Vector2( 19, 26 )
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 16.9456, 26.5234 )
+extents = Vector2( 18, 26 )
 
 [sub_resource type="Animation" id=18]
 resource_name = "Attack"
-length = 0.5
+length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath("InBattle:frame")
 tracks/0/interp = 1
@@ -21,10 +21,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 3, 4, 5, 6, 7 ]
+"values": [ 3, 4, 5, 6, 7, 8 ]
 }
 tracks/1/type = "method"
 tracks/1/path = NodePath(".")
@@ -33,11 +33,11 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.5 ),
+"times": PoolRealArray( 0.6 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
-"method": "running"
+"method": "check_next_move"
 } ]
 }
 
@@ -99,6 +99,37 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3 ]
 }
 
+[sub_resource type="Animation" id=22]
+resource_name = "Loading"
+length = 0.75
+step = 0.15
+tracks/0/type = "value"
+tracks/0/path = NodePath("InBattle:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15, 0.3, 0.45, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 9, 10, 11, 10, 9 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.75 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "shot_normal"
+} ]
+}
+
 [sub_resource type="Animation" id=19]
 resource_name = "Running"
 loop = true
@@ -137,19 +168,22 @@ shape = SubResource( 4 )
 position = Vector2( 4, 2 )
 hframes = 3
 vframes = 2
+frame = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Attack = SubResource( 18 )
 anims/Dying = SubResource( 21 )
 anims/Idle = SubResource( 17 )
+anims/Loading = SubResource( 22 )
 anims/Running = SubResource( 19 )
 
 [node name="InBattle" type="Sprite" parent="."]
 visible = false
 position = Vector2( -7, 0 )
+scale = Vector2( 0.996127, 1.00752 )
 hframes = 3
-vframes = 3
-frame = 3
+vframes = 4
+frame = 9
 
 [node name="Stats" type="Node" parent="."]
 script = ExtResource( 4 )

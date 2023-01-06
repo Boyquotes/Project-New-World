@@ -18,7 +18,7 @@ func _ready():
 			"skill_icon": 2
 		},
 		{ 
-			"name": "thanh_dung", 
+			"name": "hoa_lan", 
 			"skill_icon": 1
 		}]
 	var enemy = [{ "name": "thanh_dung", "skill_icon": 1 }]
@@ -39,13 +39,13 @@ func field_characters(party_member: Array, enemies: Array) -> void:
 		newEntity.is_party = true
 		newEntity.position = init_position.position
 		newEntity.pos = i 
-# warning-ignore:return_value_discarded
+		# warning-ignore:return_value_discarded
 		newEntity.connect("actived_ub", self, "_on_Actived_UB")
-# warning-ignore:return_value_discarded
+		# warning-ignore:return_value_discarded
 		newEntity.connect("hp_changed", self, "_on_Char_hp_changed")
-# warning-ignore:return_value_discarded
+		# warning-ignore:return_value_discarded
 		newEntity.connect("tp_changed", self, "_on_Char_tp_changed")
-# warning-ignore:return_value_discarded
+		# warning-ignore:return_value_discarded
 		newEntity.connect("set_max_hp", self, "_on_set_MAX_HP")
 		newEntity.set_collision_layer_bit(1, true)
 		newEntity.set_collision_mask_bit(2, true)

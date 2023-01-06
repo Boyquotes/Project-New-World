@@ -17,6 +17,7 @@ var crit_dmg: int
 var speed : int
 var c_range : int
 var c_class : int
+var projectile : String
 
 var is_ranged : bool = false
 
@@ -31,6 +32,7 @@ func init(stats: StartingStats, lvl: int) -> void:
 	speed = stats.speed
 	c_range = stats.attack_range
 	c_class = stats.base_class
+	projectile = stats.projectile_texture
 	if c_class == BaseClass.ARCHER || c_class == BaseClass.MAGE || c_class == BaseClass.HEALER:
 		is_ranged = true
 

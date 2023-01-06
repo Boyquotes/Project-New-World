@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://game_script/skills/BaseSkill.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+skill_name = "Tường lửa"
+skill_description = "Gây sát thương toàn bộ kẻ địch"
+base_dmg = 20
+type = 1
+side_effect = 0
