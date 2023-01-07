@@ -10,10 +10,11 @@ signal hp_depleted()
 var max_hp : int
 var current_hp : int
 var physic : int
+var magic : int
 var p_defense : int
 var m_armor : int
-var crit_c : int
-var crit_dmg: int
+var crit_c : float
+var crit_dmg: float
 var speed : int
 var c_range : int
 var c_class : int
@@ -25,10 +26,11 @@ func init(stats: StartingStats, lvl: int) -> void:
 	max_hp = stats.max_hp
 	current_hp = stats.max_hp
 	physic = stats.physic
+	magic = stats.magic
 	p_defense = stats.p_defense
 	m_armor = stats.m_armor
-	crit_c = stats.crit_c
-	crit_dmg = stats.crit_dmg
+	crit_c = stats.crit_c / 100.0
+	crit_dmg = stats.crit_dmg / 100.0
 	speed = stats.speed
 	c_range = stats.attack_range
 	c_class = stats.base_class

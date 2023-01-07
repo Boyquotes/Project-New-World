@@ -4,13 +4,13 @@ class_name Entity
 
 enum SideEffect { NONE, BUFF, TRANSFORM }
 enum DamameType { PHYSIC, MAGIC, TRUE, PIERCE }
-enum BaseClass { FIGHTER, DEFENDER, PALADIN, ARCHER, MAGICAN, HEALER }
-enum States { IDLE, KNOCKBACKED, RUNNING, LOAD_AA, ATTACKING }
+enum BaseClass { FIGHTER, DEFENDER, PALADIN, ARCHER, MAGE, HEALER }
+enum State { RUNNING, KNOCKBACKED, LOAD_AA, SHOOT, DEATH }
 
 signal hp_changed(new_hp, pos)
 signal set_max_hp(max_hp, pos)
 signal tp_changed(new_tp, pos)
-signal actived_ub(index, _position, is_party)
+signal hp_depleted(is_party)
 
 var txt_dmg_number = preload("res://components/battle/DamageNumber.tscn")
 var node_aa_range = preload("res://components/battle/AttackRange.tscn")
@@ -22,6 +22,8 @@ onready var hurtBox : HurtBox = $HurtBox as HurtBox
 onready var battleSprite : Sprite = $InBattle as Sprite
 onready var idleSprite : Sprite = $Idle as Sprite
 onready var animationPlayer : AnimationPlayer = $AnimationPlayer as AnimationPlayer
+onready var _col1 := $HurtBox/CollisionShape2D
+onready var _col2 := $CollisionBody
 
 export var c_name: String
 export var is_party : bool = true
@@ -30,31 +32,30 @@ export var level : int
 var attack_range : AttackRange
 
 #?gameplay section
-var state : int = States.IDLE
-const max_dur = 10
-var idle_time = 80
 var can_move := true
+var idle_time := 80
 
+var state : State
+var state_factory : StateFactory
 var pos : int
-var _velocity := Vector2.ZERO
-var dir = -1
-var isKnockBack = false
-var knockback_duration = max_dur
+var velocity := Vector2.ZERO
+var dir := -1 # multiply with speed
 
 #?skill section
-var ts : CharacterTransform
 var projectile_texture : Texture
+var ts : CharacterTransform
 var ub #Union Burst : unknown type for future proof
 
 func _ready() -> void:
+	state_factory = StateFactory.new()
 	set_resource()
 	if !stats.is_ranged:
 		battleSprite.set_vframes(3)
 	hurtBox.init(is_party)
-	animationPlayer.play("Idle")
+	animationPlayer.play("idle")
 
 func set_resource() ->  void:
-	if c_name == null : 
+	if c_name == null :
 		queue_free()
 	var spriteImg = load("res://assets/sprite/" + c_name +"/inbattle.png")
 	var idleImg = load("res://assets/sprite/" + c_name +"/idle.png")
@@ -68,22 +69,17 @@ func set_resource() ->  void:
 		projectile_texture = load("res://assets/projectile/" + stats.projectile + ".png")
 		attack_range = node_aa_range.instance()
 		attack_range.init(is_party, stats.c_range)
-		# warning-ignore:return_value_discarded
 		attack_range.connect("toggle_movement", self, "_on_Movement_toggle")
 		add_child(attack_range)
 
 	skill.init(baseSkill, level)
 	if skill.effect == SideEffect.TRANSFORM:
 		ts = load("res://components/UB/" + c_name + "/ts.tscn").instance()
-		# warning-ignore:return_value_discarded
+		ts.setter(is_party, stats)
 		ts.connect('end_transfrom', self, '_on_end_Transform')
 		add_child(ts)
-		ts.init_transform(is_party, 5, skill.type)
-	ub = load("res://components/UB/" + c_name + "/UB.tscn").instance()
-	ub.init(skill, is_party)
-	# warning-ignore:return_value_discarded
-	ub.connect("finish", self, "_on_UB_animation_finish")
-	add_child(ub)
+	# ub = load("res://components/UB/" + c_name + "/UB.tscn").instance()
+	# add_child(ub)
 
 	battleSprite.set_texture(spriteImg)
 	idleSprite.set_texture(idleImg)
@@ -91,40 +87,43 @@ func set_resource() ->  void:
 		scale = Vector2(-1, 1)
 		dir = -dir
 
-#* Battle Gameplay Mechanic
-func isCrit() -> bool:
-	var percent = randf()
-	if percent > (1 - float(stats.crit_c) / 100):
-		return true
-	return false
-
-func activeUB() -> void:
+#// UB Layer
+func activeUB() -> Vector2:
+	if skill.current_tp == 1000:
+		pass
 	battleSprite.visible = false
-	ub.runAnimation(position)
-	emit_signal("actived_ub", pos, position, is_party)
-	get_tree().paused = true
+	return position
 
-func _on_UB_animation_finish():
+func UB_animation_finish():
 	if skill.effect == SideEffect.TRANSFORM:
 		ts.activeTransform()
 	else:
 		battleSprite.visible = true
 
+#* Battle Gameplay Mechanic
+
 func normal_hit_enemy(target: Entity) -> void:
-	animationPlayer.play("Attack")
-	var is_crit = isCrit()
-	var dmg = stats.physic
+	animationPlayer.play("attack")
+	var is_crit = Utils.isCrit(stats.crit_c)
+	var dmg : int = stats.physic
 	if is_crit: 
-		dmg = dmg * stats.crit_dmg / 100
+		dmg *= stats.crit_dmg
 	target.take_damage(dmg, is_crit, DamameType.PHYSIC)
 
-func fire_projectile() -> void:
+func fire_normal_aa() -> void:
 	var projectile : Projectile = ins_projectile.instance()
 	projectile._texture =  projectile_texture
-	projectile.position.x = -18
-	if is_party:
-		projectile.dir = -1
-		projectile.scale = Vector2(-1, 1)
+	if stats.c_class == BaseClass.MAGE || BaseClass.HEALER:
+		projectile.dmg = stats.magic
+		projectile.type = DamameType.MAGIC
+	else:
+		projectile.dmg = stats.physic
+		projectile.type = DamameType.PHYSIC
+	projectile.is_crit = Utils.isCrit(stats.crit_c)
+	if projectile.is_crit:
+		projectile.dmg *= stats.crit_dmg
+	projectile.is_party = is_party
+	projectile.is_kb = true
 	add_child(projectile)
 	
 func take_damage(amount: int, is_crit: bool, type: int) -> void:
@@ -133,40 +132,52 @@ func take_damage(amount: int, is_crit: bool, type: int) -> void:
 	skill.addTP(100)
 	stats.take_dmg(amount, is_crit, type)
 
+func _on_Stats_hp_depleted():
+	if ts != null:
+		ts.queue_free()
+	# ub.queue_free()
+	_col1.set_deferred("disabled", true)
+	_col2.set_deferred("disabled", true)
+	change_state(State.DEATH)
+	if pos != null:
+		emit_signal("hp_depleted", is_party)
+
 #* Process each frame
+#! check next move after attack or shoot projectile
 func check_next_move() -> void:
+	if state.s_name == State.SHOOT:
+		fire_normal_aa()
 	if can_move:
-		animationPlayer.play("Running")
-	else:
-		animationPlayer.play("Loading")
+		animationPlayer.play("running")
+		if state.s_name != State.RUNNING:
+			change_state(State.RUNNING)
+	else: 
+		change_state(State.LOAD_AA)
+
 func shot_normal() -> void:
-	animationPlayer.play("Attack")
+	change_state(State.SHOOT)
 
 func _on_Movement_toggle(move: bool) -> void:
 	can_move = move
 
-func _physics_process(_delta: float) -> void:
+func change_state(new_state_name) -> void:
+	if state != null:
+		if state.s_name == State.DEATH:
+			return
+		state.queue_free()
+	state = state_factory.get_state(new_state_name).new()
+	state.s_name = new_state_name
+	state.setup(funcref(self, "change_state"), animationPlayer, self)
+	add_child(state)
+
+func _physics_process(_delta):
 	if idle_time > 0:
 		idle_time -= 1
 		if idle_time == 0:
 			idleSprite.visible = false
 			battleSprite.visible = true
-			animationPlayer.play("Running")
-			state = States.RUNNING
-		return
-
-	_velocity.x = dir
-
-	if state == States.KNOCKBACKED:
-		if is_party: _velocity.x = -500
-		else: _velocity.x = 500
-			
-		knockback_duration -= 1
-		if knockback_duration <= 0 : 
-			state = States.RUNNING
-			knockback_duration = max_dur
-
-	_velocity = move_and_slide(_velocity)
+			animationPlayer.play("running")
+			change_state(State.RUNNING)
 
 #* Signal Management
 func showDamageNumber(amount: int, is_crit: bool, type: int) -> void:
@@ -191,3 +202,4 @@ func get_class() -> String: return "Entity"
 #* Skill Side Effect
 func _on_end_Transform() -> void:
 	battleSprite.visible = true
+

@@ -12,7 +12,7 @@ extents = Vector2( 19, 26 )
 extents = Vector2( 18, 26 )
 
 [sub_resource type="Animation" id=18]
-resource_name = "Attack"
+resource_name = "attack"
 length = 0.6
 tracks/0/type = "value"
 tracks/0/path = NodePath("InBattle:frame")
@@ -42,7 +42,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=21]
-resource_name = "Dying"
+resource_name = "dying"
 tracks/0/type = "value"
 tracks/0/path = NodePath("InBattle:frame")
 tracks/0/interp = 1
@@ -67,23 +67,9 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.498039 ), Color( 1, 1, 1, 0 ) ]
 }
-tracks/2/type = "method"
-tracks/2/path = NodePath(".")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 1 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [  ],
-"method": "queue_free"
-} ]
-}
 
 [sub_resource type="Animation" id=17]
-resource_name = "Idle"
+resource_name = "idle"
 loop = true
 step = 0.25
 tracks/0/type = "value"
@@ -100,7 +86,7 @@ tracks/0/keys = {
 }
 
 [sub_resource type="Animation" id=22]
-resource_name = "Loading"
+resource_name = "loading"
 length = 0.75
 step = 0.15
 tracks/0/type = "value"
@@ -131,7 +117,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=19]
-resource_name = "Running"
+resource_name = "running"
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("InBattle:frame")
@@ -168,22 +154,20 @@ shape = SubResource( 4 )
 position = Vector2( 4, 2 )
 hframes = 3
 vframes = 2
-frame = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Attack = SubResource( 18 )
-anims/Dying = SubResource( 21 )
-anims/Idle = SubResource( 17 )
-anims/Loading = SubResource( 22 )
-anims/Running = SubResource( 19 )
+anims/attack = SubResource( 18 )
+anims/dying = SubResource( 21 )
+anims/idle = SubResource( 17 )
+anims/loading = SubResource( 22 )
+anims/running = SubResource( 19 )
 
 [node name="InBattle" type="Sprite" parent="."]
 visible = false
 position = Vector2( -7, 0 )
-scale = Vector2( 0.996127, 1.00752 )
 hframes = 3
 vframes = 4
-frame = 9
+frame = 3
 
 [node name="Stats" type="Node" parent="."]
 script = ExtResource( 4 )
@@ -192,4 +176,5 @@ script = ExtResource( 4 )
 script = ExtResource( 5 )
 
 [connection signal="hp_changed" from="Stats" to="." method="_on_Stats_hp_changed"]
+[connection signal="hp_depleted" from="Stats" to="." method="_on_Stats_hp_depleted"]
 [connection signal="add_tp" from="Skill" to="." method="_on_Skill_add_tp"]

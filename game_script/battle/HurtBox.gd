@@ -21,14 +21,12 @@ func _on_Area_enter(box: HitBox) -> void:
 		return
 	if owner.get_class() == "Entity":
 		owner.take_damage(box.dmg, box.is_crit, box.type)
-		owner.isKnockBack = box.is_kb
-		owner.knockback_duration = box.kb_dur
+		if box.is_kb:
+			owner.change_state(1)
 
 func _on_Body_enter(body) -> void:
 	if body.get_class() != "Entity":
 		return
 	if owner.get_class() == "Entity":
 		body.normal_hit_enemy(owner)
-		owner.is_loaded = false
-		owner.state = 1
-		owner.knockback_duration = owner.max_dur
+		owner.change_state(1)

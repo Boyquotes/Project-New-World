@@ -2,24 +2,22 @@
 
 [ext_resource path="res://game_script/battle/UI/UIBattle.gd" type="Script" id=1]
 
-[node name="UIBattle" type="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="UIBattle" type="CanvasLayer"]
 script = ExtResource( 1 )
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="Control" type="Control" parent="."]
 
-[node name="button1" type="Position2D" parent="CanvasLayer"]
+[node name="button1" type="Position2D" parent="Control"]
 position = Vector2( 60, 265 )
 
-[node name="button2" type="Position2D" parent="CanvasLayer"]
+[node name="button2" type="Position2D" parent="Control"]
 position = Vector2( 120, 265 )
 
-[node name="button3" type="Position2D" parent="CanvasLayer"]
+[node name="button3" type="Position2D" parent="Control"]
 position = Vector2( 180, 265 )
 
-[node name="button4" type="Position2D" parent="CanvasLayer"]
+[node name="button4" type="Position2D" parent="Control"]
 position = Vector2( 240, 265 )
 
-[node name="button5" type="Position2D" parent="CanvasLayer"]
+[node name="button5" type="Position2D" parent="Control"]
 position = Vector2( 300, 265 )

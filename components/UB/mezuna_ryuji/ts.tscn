@@ -1,11 +1,11 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/sprite/mezuna_ryuji/TS.png" type="Texture" id=1]
-[ext_resource path="res://game_script/skills/effects/BaseTransform.gd" type="Script" id=2]
+[ext_resource path="res://components/UB/mezuna_ryuji/ts-mezuna_ryuji.gd" type="Script" id=2]
 [ext_resource path="res://game_script/battle/HitBox.gd" type="Script" id=3]
 
 [sub_resource type="Animation" id=1]
-resource_name = "UB"
+resource_name = "transform"
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
@@ -88,7 +88,7 @@ vframes = 2
 frame = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/UB = SubResource( 1 )
+anims/transform = SubResource( 1 )
 
 [node name="HitBox" type="Area2D" parent="."]
 collision_layer = 0

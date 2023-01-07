@@ -1,111 +1,11 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://assets/sprite/mezuna_ryuji/UB.png" type="Texture" id=1]
-[ext_resource path="res://game_script/skills/LayerUB.gd" type="Script" id=2]
 [ext_resource path="res://game_script/battle/HitBox.gd" type="Script" id=3]
-[ext_resource path="res://components/Area/DefaultArea.tscn" type="PackedScene" id=4]
-
-[sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 624, 344 )
-
-[sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 1 )
-region = Rect2( 624, 0, 624, 344 )
-
-[sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 1 )
-region = Rect2( 1248, 0, 624, 344 )
-
-[sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 344, 624, 344 )
-
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 1 )
-region = Rect2( 624, 344, 624, 344 )
-
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 1 )
-region = Rect2( 1248, 344, 624, 344 )
-
-[sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 688, 624, 344 )
-
-[sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 1 )
-region = Rect2( 624, 688, 624, 344 )
-
-[sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 1 )
-region = Rect2( 1248, 688, 624, 344 )
-
-[sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 1032, 624, 344 )
-
-[sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 1 )
-region = Rect2( 624, 1032, 624, 344 )
-
-[sub_resource type="AtlasTexture" id=12]
-atlas = ExtResource( 1 )
-region = Rect2( 1248, 1032, 624, 344 )
-
-[sub_resource type="AtlasTexture" id=13]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 1376, 624, 344 )
-
-[sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 1 )
-region = Rect2( 624, 1376, 624, 344 )
-
-[sub_resource type="AtlasTexture" id=15]
-atlas = ExtResource( 1 )
-region = Rect2( 1248, 1376, 624, 344 )
-
-[sub_resource type="AtlasTexture" id=16]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 1720, 624, 344 )
-
-[sub_resource type="AtlasTexture" id=17]
-atlas = ExtResource( 1 )
-region = Rect2( 624, 1720, 624, 344 )
-
-[sub_resource type="AtlasTexture" id=18]
-atlas = ExtResource( 1 )
-region = Rect2( 1248, 1720, 624, 344 )
-
-[sub_resource type="SpriteFrames" id=19]
-animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
-"loop": false,
-"name": "default",
-"speed": 10.0
-} ]
 
 [sub_resource type="RectangleShape2D" id=20]
 extents = Vector2( 66, 30 )
 
 [node name="UB" type="Node2D"]
-script = ExtResource( 2 )
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Panel" type="ColorRect" parent="CanvasLayer"]
-modulate = Color( 0, 0, 0, 0.690196 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-
-[node name="Node2D" type="Node2D" parent="CanvasLayer"]
-
-[node name="D_Area" parent="CanvasLayer/Node2D" instance=ExtResource( 4 )]
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="CanvasLayer/Node2D"]
-position = Vector2( -100, 50 )
-frames = SubResource( 19 )
-frame = 17
 
 [node name="HitBox" type="Area2D" parent="."]
 scale = Vector2( -1, 1 )

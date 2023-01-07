@@ -8,19 +8,25 @@ onready var _aniPlayer : AnimationPlayer = $AnimationPlayer as AnimationPlayer
 onready var _sprite : Sprite = $Sprite as Sprite
 onready var _hitbox : HitBox = $HitBox as HitBox
 
+var stats : CharacterStats
+var is_party : bool
+
 func _ready():
 	visible = false
 	_hitbox.disable_collision()
-
-func init_transform(is_party: bool, dmg: int, type: int) -> void:
-	_hitbox.dmg = dmg
-	_hitbox.is_crit = false
-	_hitbox.type = type
 	_hitbox.init(is_party)
+	init_transform()
+
+func setter(is_party: bool, stats: CharacterStats) -> void:
+	self.stats = stats
+	self.is_party = is_party
+
+func init_transform() -> void:
+	pass
 		
 func activeTransform() -> void:
 	visible = true
-	_aniPlayer.play("UB")
+	_aniPlayer.play("transform")
 
 func endTransform() -> void:
 	visible = false

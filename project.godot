@@ -24,7 +24,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://game_script/battle/BattleManager.gd"
 }, {
-"base": "Control",
+"base": "CanvasLayer",
 "class": "BattleUI",
 "language": "GDScript",
 "path": "res://game_script/battle/UI/UIBattle.gd"
@@ -54,6 +54,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://game_script/battle/DamageNumber.gd"
 }, {
+"base": "State",
+"class": "DeathState",
+"language": "GDScript",
+"path": "res://game_script/entities/states/DeathState.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Entity",
 "language": "GDScript",
@@ -74,20 +79,55 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://game_script/battle/HurtBox.gd"
 }, {
-"base": "Node2D",
-"class": "LayerUB",
+"base": "State",
+"class": "KnockBackState",
 "language": "GDScript",
-"path": "res://game_script/skills/LayerUB.gd"
+"path": "res://game_script/entities/states/KnockBackState.gd"
+}, {
+"base": "State",
+"class": "LoadingState",
+"language": "GDScript",
+"path": "res://game_script/entities/states/LoadingState.gd"
+}, {
+"base": "Node2D",
+"class": "NodeUB",
+"language": "GDScript",
+"path": "res://game_script/battle/UI/NodeUB.gd"
 }, {
 "base": "Node2D",
 "class": "Projectile",
 "language": "GDScript",
 "path": "res://game_script/battle/Projectile.gd"
 }, {
+"base": "State",
+"class": "RunningState",
+"language": "GDScript",
+"path": "res://game_script/entities/states/RunningState.gd"
+}, {
+"base": "State",
+"class": "ShootState",
+"language": "GDScript",
+"path": "res://game_script/entities/states/ShootState.gd"
+}, {
 "base": "Resource",
 "class": "StartingStats",
 "language": "GDScript",
 "path": "res://game_script/character_stats/StartingStats.gd"
+}, {
+"base": "Node2D",
+"class": "State",
+"language": "GDScript",
+"path": "res://game_script/entities/states/StateMachine.gd"
+}, {
+"base": "Reference",
+"class": "StateFactory",
+"language": "GDScript",
+"path": "res://game_script/entities/states/StateFactory.gd"
+}, {
+"base": "CanvasLayer",
+"class": "UBLayer",
+"language": "GDScript",
+"path": "res://game_script/battle/UI/UBLayer.gd"
 } ]
 _global_script_class_icons={
 "AttackRange": "",
@@ -99,13 +139,21 @@ _global_script_class_icons={
 "CharacterStats": "",
 "CharacterTransform": "",
 "DamageNumber": "",
+"DeathState": "",
 "Entity": "",
 "Formation": "",
 "HitBox": "",
 "HurtBox": "",
-"LayerUB": "",
+"KnockBackState": "",
+"LoadingState": "",
+"NodeUB": "",
 "Projectile": "",
-"StartingStats": ""
+"RunningState": "",
+"ShootState": "",
+"StartingStats": "",
+"State": "",
+"StateFactory": "",
+"UBLayer": ""
 }
 
 [application]
@@ -113,6 +161,10 @@ _global_script_class_icons={
 config/name="Project New World"
 run/main_scene="res://Scene/GameScene.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Utils="*res://game_script/global/Utils.tscn"
 
 [debug]
 

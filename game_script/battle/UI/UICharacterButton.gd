@@ -2,7 +2,7 @@ extends Control
 
 class_name ButtonUB
 
-signal active_ub(i)
+signal active_ub()
 
 onready var skillRect : TextureRect = $TextureRect as TextureRect
 onready var textureImg : TextureRect = $UImain/Panel/TextureRect as TextureRect
@@ -13,7 +13,7 @@ var pos : int
 var c_name : String
 var skill_icon : int
 
-var mold = 64 / 255.0
+var mold = 65 / 255.0
 var under = Color(mold, mold, mold)
 var fully = Color(1, 1, 1)
 
@@ -31,6 +31,8 @@ func set_max_hp(value: int, _pos: int) -> void:
 
 func set_current_hp(value: int) -> void:
 	hpBar.value = value
+	if value == 0:
+		modulate = under
 
 func set_current_tp(value: int) -> void:
 	tpBar.value = value
@@ -38,4 +40,4 @@ func set_current_tp(value: int) -> void:
 		skillRect.modulate = fully
 
 func _on_Button_pressed():
-	emit_signal("active_ub", pos)
+	emit_signal("active_ub", true, pos)
